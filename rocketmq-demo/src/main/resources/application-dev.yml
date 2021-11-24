@@ -2,7 +2,7 @@ server:
   #访问HTTP端口号
   port: 8182
   servlet:
-    context-path: "/smart-office"
+    context-path: "/rocketmq-demo"
 
 
 ########################################################
@@ -10,3 +10,15 @@ server:
 ########################################################
 logging:
   config: classpath:log4j2.xml
+
+
+
+########################################################
+### 配置RocketMQ
+########################################################
+#这是RocketMQ最低配置
+rocketmq:
+  name-server: 106.15.187.228:9876
+  producer:
+    #发送同一类消息的设置为同一个group，保证唯一 （一个工程下只有一个group）
+    group: imooc-study-ecommerce
