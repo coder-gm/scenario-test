@@ -1,0 +1,175 @@
+server:
+  #访问HTTP端口号
+  port: 8182
+  servlet:
+    context-path: "/smart-office"
+
+
+########################################################
+### 指定日志文件
+########################################################
+logging:
+  config: classpath:log4j2.xml
+
+
+
+#########################################################
+#### Spring配置
+#########################################################
+spring:
+
+  freemarker:
+    cache: false #缓存配置 开发阶段应该配置为false,因为经常会改
+    suffix: .html #模板文件后缀名
+    charset: UTF-8 #文件编码
+    template-loader-path: classpath:/template/
+
+  ################################################## mail配置 ##########################################
+  mail:
+    host: smtp.qq.com #发送邮件服务器
+    username: 4995869@qq.com #QQ邮箱
+    password: ycknaajhjqlhbieh #客户端授权码
+    default-encoding: UTF-8 #邮件发送内容的字符编码
+    protocol: smtp #发送邮件协议
+    properties.mail.smtp.auth: true #是否进行验证
+    properties.mail.smtp.port: 465  #端口号465或587
+    properties.mail.smtp.starttls.enable: true    #安全的发送HTTP邮件
+    properties.mail.smtp.starttls.required: true #安全的发送HTTP邮件
+    properties.mail.smtp.ssl.enable: true   #安全的发送HTTP邮件
+    properties.mail.display.sendmail: Javen #可以任意
+    properties.mail.display.sendname: Spring Boot Guide Email #可以任意
+
+  ################################################## redis配置 ##########################################
+  redis:
+    database: 0 # Redis 数据库索引（默认为 0）
+    host: 47.103.64.174 # Redis 服务器地址
+    port: 6379 # Redis 服务器连接端口
+    password: Gm859230 # Redis 服务器连接密码（默认为空）
+    timeout: 5000  # 连接超时，单位ms
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-idle: 8 # 连接池中的最大空闲连接 默认 8
+        min-idle: 0 # 连接池中的最小空闲连接 默认 0
+
+
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.103.64.174:3306/fz_smart_office?useSSL=false&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: Gm859230
+    type: com.zaxxer.hikari.HikariDataSource
+
+    ################################################## Hikari数据库连接池 ##########################################
+    hikari:
+      pool-name: Retail_HikariCP
+      minimum-idle: 3 #最小空闲连接数量
+      idle-timeout: 600000 #一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+      maximum-pool-size: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+      #auto-commit: true #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      max-lifetime: 1800000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+      connection-timeout: 30000  #等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException,缺省:30秒
+      #connection-test-query: SELECT 1
+      #read-only: true #连接只读数据库时配置为true,保证安全
+
+
+  ################################################## Hikari数据库连接池 ##########################################
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8180/actuator-admin
+
+
+
+########################################################
+### mybatis-plus配置
+########################################################
+mybatis-plus: #对应 MybatisSqlSessionFactoryBean
+  check-config-location: false #启动时是否检查 mybatis-config.xml文件的存在,默认不检查
+  #config-location: 引入mybatis-config.xml配置文件  和 mybatis-plus.configuration 只能二选一
+  #type-aliases-package: #为某个包下的所有类取别名
+  #type-handlers-package: #引入自定义类型转换
+  #type-aliases-super-type: java.lang.Object
+  #configuration-properties: #指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署
+  type-enums-package: cn.com.common.model.enums  #枚举类 扫描路径，如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性
+  #mapper-locations: classpath:mapper/*.xml
+
+  configuration:
+    #开启数据库字段与实体类驼峰命名映射
+    map-underscore-to-camel-case: true
+    #开启mybatis的日志实现,可以在控制台打印输入sql语句 (仅限于开发环境,生产环境要去掉,要不日志量很大)
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config: #对应 GlobalConfig (MyBatisPlus全局策略配置)
+
+    db-config:
+      #全局主键生成策略和 @TableId(value = "id", type = IdType.AUTO) 一样使用
+      id-type: assign_uuid
+
+
+
+########################################################
+### 金蝶 配置
+########################################################
+jindie:
+  token:
+    url: https://api.kingdee.com/auth/user/access_token
+  inventory:
+    url: https://api.kingdee.com/jdyscm/inventory/list
+  userName: 18516015020
+  password: fuzhao123
+  client_id: 210876
+  client_secret: 255bc39d994c80a7f403c4b24f60ac81
+  dbId: 7984914894277
+
+
+
+########################################################
+### 震坤行 配置
+########################################################
+zkh:
+  dev:
+    url: https://honeycomb-app-uat.zkh360.com
+  prd:
+    url: https://honeycomb.zkh360.com
+  access:
+    id: 197169
+    secret: f214130acdfebe12dQ6qKsn
+  token:
+    url: /openApi/v1/token
+  product:
+    url: /openApi/v1/common/goodPageList
+  upload:
+    url: /openApi/upload/batch/v1
+
+
+########################################################
+### Email 配置
+########################################################
+send:
+  from:
+    email: 4995869@qq.com
+  to:
+    email: ella_wei@fuzhao-industry.com
+
+
+########################################################
+### actuator 配置
+########################################################
+management:
+  endpoints:
+    enabled-by-default: true #暴露所有端点信息
+    web:
+      exposure:
+        include: "*" #以web方式暴露
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+  info:
+    app-name: smart-office
+    description: 弗兆智慧办公
+
+
