@@ -36,7 +36,8 @@
         <module>common</module>
         <!--rocketmq测试模块-->
         <module>rocketmq-demo</module>
-
+        <!--RabbitMQ测试工程-->
+        <module>rabbitmq-demo</module>
     </modules>
 
 
