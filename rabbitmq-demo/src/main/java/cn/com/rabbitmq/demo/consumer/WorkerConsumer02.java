@@ -46,8 +46,8 @@ public class WorkerConsumer02 {
 
         System.out.println("C2 消费者启动等待消费......");
 
-        //填写1 就代表不公平分发 0：代表轮询分发
-        channel.basicQos(1);
+        //填写1 就代表不公平分发 0：代表轮询分发 1以上的数字代表预期值的数量
+        channel.basicQos(2);
 
         /**
          * 消费者消费消息
