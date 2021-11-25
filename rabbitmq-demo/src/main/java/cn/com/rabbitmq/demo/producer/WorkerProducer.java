@@ -20,6 +20,9 @@ public class WorkerProducer {
     public static void main(String[] args) throws Exception {
         try (Channel channel = RabbitMqUtils.getChannel();) {
 
+            //开启持久化的发布确认
+            channel.confirmSelect();
+
             //生成一个队列
             /**
              * 参数1.队列名称
@@ -44,6 +47,12 @@ public class WorkerProducer {
                  */
                 channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
                 System.out.println("发送消息完成:" + message);
+
+                //服务端返回 false 或超时时间内未返回，生产者可以消息重发
+                boolean flag = channel.waitForConfirms();
+                if(flag){
+                    System.out.println("消息发送成功");
+                }
 
             }
         }
