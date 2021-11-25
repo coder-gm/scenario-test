@@ -20,9 +20,22 @@ public class WorkerConsumer02 {
         Channel channel = RabbitMqUtils.getChannel();
 
         //接收消息
-        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            String receivedMessage = new String(delivery.getBody());
+        DeliverCallback deliverCallback = (consumerTag, message) -> {
+            System.out.println("C2消费者，接收消息中.....");
+
+            try {
+                //沉睡时间 5 秒
+                Thread.sleep(18000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            String receivedMessage = new String(message.getBody());
             System.out.println("接收到消息:" + receivedMessage);
+
+            System.out.println("消息的标记tag:" + message.getEnvelope().getDeliveryTag());
+            //手动应答确认是否消费
+            channel.basicAck(message.getEnvelope().getDeliveryTag(), false);
         };
 
         //取消消费的一个回调接口 如在消费的时候队列被删除掉了
@@ -40,7 +53,9 @@ public class WorkerConsumer02 {
          * 3.消费者未成功消费的回调
          * 4.取消消息的回调
          */
-        channel.basicConsume(QUEUE_NAME, true, deliverCallback, cancelCallback);
+        //采用手动应答
+        boolean autoAck = false;
+        channel.basicConsume(QUEUE_NAME, autoAck, deliverCallback, cancelCallback);
     }
 
 
