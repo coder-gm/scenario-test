@@ -2,6 +2,7 @@ package cn.com.rabbitmq.demo.producer;
 
 import cn.com.rabbitmq.demo.utils.RabbitMqUtils;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.MessageProperties;
 
 import java.util.Scanner;
 
@@ -27,7 +28,9 @@ public class WorkerProducer {
              * 参数4.是否自动删除 最后一个消费者端开连接以后 该队列是否自动删除 true 自动删除
              * 参数5.其他参数
              */
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            //让消息队列持久化
+            boolean durable=true;
+            channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
             //从控制台当中接受信息
             Scanner scanner = new Scanner(System.in);
             while (scanner.hasNext()) {
@@ -39,7 +42,7 @@ public class WorkerProducer {
                  * 参数3.其他的参数信息
                  * 参数4.发送消息的消息体
                  */
-                channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+                channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
                 System.out.println("发送消息完成:" + message);
 
             }
