@@ -21,8 +21,8 @@ public class TtlQueueConfig {
     public static final String X_EXCHANGE = "X";
     //普通队列的名称
     public static final String QUEUE_A = "QA";
-    //普通队列的名称
-    public static final String QUEUE_B = "QB";
+    ////普通队列的名称
+    //public static final String QUEUE_B = "QB";
 
     //死信交换机名称
     public static final String Y_DEAD_LETTER_EXCHANGE = "Y";
@@ -67,27 +67,27 @@ public class TtlQueueConfig {
         //声明当前队列的死信路由 key
         args.put("x-dead-letter-routing-key", "YD");
         //声明队列的 TTL
-        args.put("x-message-ttl", 10000);
+        //args.put("x-message-ttl", 10000);
         return QueueBuilder.durable(QUEUE_A).withArguments(args).build();
     }
 
 
-    /**
-     * 声明队列 QB ttl 为 40s 并绑定到对应的死信交换机
-     *
-     * @return
-     */
-    @Bean("queueB")
-    public Queue queueB() {
-        Map<String, Object> args = new HashMap<>(3);
-        //声明当前队列绑定的死信交换机
-        args.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
-        //声明当前队列的死信路由 key
-        args.put("x-dead-letter-routing-key", "YD");
-        //声明队列的 TTL
-        args.put("x-message-ttl", 40000);
-        return QueueBuilder.durable(QUEUE_B).withArguments(args).build();
-    }
+    ///**
+    // * 声明队列 QB ttl 为 40s 并绑定到对应的死信交换机
+    // *
+    // * @return
+    // */
+    //@Bean("queueB")
+    //public Queue queueB() {
+    //    Map<String, Object> args = new HashMap<>(3);
+    //    //声明当前队列绑定的死信交换机
+    //    args.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
+    //    //声明当前队列的死信路由 key
+    //    args.put("x-dead-letter-routing-key", "YD");
+    //    //声明队列的 TTL
+    //    args.put("x-message-ttl", 40000);
+    //    return QueueBuilder.durable(QUEUE_B).withArguments(args).build();
+    //}
 
 
     /**
@@ -115,19 +115,19 @@ public class TtlQueueConfig {
         return BindingBuilder.bind(queueA).to(xExchange).with("XA");
     }
 
-
-    /**
-     * 声明队列 QB 绑定 X 交换机
-     *
-     * @param queue1B
-     * @param xExchange
-     * @return
-     */
-    @Bean
-    public Binding queuebBindingX(@Qualifier("queueB") Queue queue1B,
-                                  @Qualifier("xExchange") DirectExchange xExchange) {
-        return BindingBuilder.bind(queue1B).to(xExchange).with("XB");
-    }
+    //
+    ///**
+    // * 声明队列 QB 绑定 X 交换机
+    // *
+    // * @param queue1B
+    // * @param xExchange
+    // * @return
+    // */
+    //@Bean
+    //public Binding queuebBindingX(@Qualifier("queueB") Queue queue1B,
+    //                              @Qualifier("xExchange") DirectExchange xExchange) {
+    //    return BindingBuilder.bind(queue1B).to(xExchange).with("XB");
+    //}
 
 
     /**

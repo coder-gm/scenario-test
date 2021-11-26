@@ -20,5 +20,5 @@ spring:
   rabbitmq:
     host: 106.15.187.228
     port: 5672
-    username: zgming
-    password: Gm859230
+    username: admin
+    password: admin

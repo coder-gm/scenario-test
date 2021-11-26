@@ -23,11 +23,16 @@ public class SendMsgController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @GetMapping("/sendMsg/{message}")
-    public void sendMsg(@PathVariable String message) {
+    @GetMapping("/sendMsg/{message}/{ttlTime}")
+    public void sendMsg(@PathVariable String message, @PathVariable String ttlTime) {
         log.info("当前时间：{},发送一条信息给两个 TTL 队列:{}", new Date(), message);
-        rabbitTemplate.convertAndSend("X", "XA", "消息来自 ttl 为 10S 的队列: " + message);
-        rabbitTemplate.convertAndSend("X", "XB", "消息来自 ttl 为 40S 的队列: " + message);
+
+        rabbitTemplate.convertAndSend("X", "XA", "消息来自 ttl 为 "+ttlTime+"ms 的队列: " + message, msg -> {
+            //发送消息的时候，设置消息过期时间
+            msg.getMessageProperties().setExpiration(ttlTime);
+            return msg;
+        });
+
     }
 
 

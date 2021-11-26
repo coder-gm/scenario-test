@@ -23,9 +23,9 @@ public class RabbitMqUtils {
         //步骤2：工厂IP 连接 RabbitMQ的队列
         factory.setHost("106.15.187.228");
         //步骤3：用户名
-        factory.setUsername("zgming");
+        factory.setUsername("admin");
         //步骤4：密码
-        factory.setPassword("Gm859230");
+        factory.setPassword("admin");
         //步骤5：创建连接
         Connection connection = factory.newConnection();
         //步骤6：创建信道
