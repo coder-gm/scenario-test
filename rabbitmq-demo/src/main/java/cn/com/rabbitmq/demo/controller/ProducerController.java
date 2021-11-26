@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-
 /**
  * @Description
  * @Author Guang Ming Zhang
@@ -39,7 +37,10 @@ public class ProducerController {
     public void sendMessage(@PathVariable String message) {
         //指定消息 id 为 1
         CorrelationData correlationData1 = new CorrelationData("1");
-        rabbitTemplate.convertAndSend(CONFIRM_EXCHANGE_NAME + "1212", "key1", message + "key1", correlationData1);
+        rabbitTemplate.convertAndSend(CONFIRM_EXCHANGE_NAME, "key1", message + "key1", correlationData1);
+
+        CorrelationData correlationData2 = new CorrelationData("2");
+        rabbitTemplate.convertAndSend(CONFIRM_EXCHANGE_NAME, "key2", message + "key2", correlationData2);
 
         log.info("发送消息内容:{}", message);
     }

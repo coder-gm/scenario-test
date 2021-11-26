@@ -6,21 +6,21 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
+ * 报警消费者
+ *
  * @Description
  * @Author Guang Ming Zhang
- * @Date 2021/11/26 17:13
+ * @Date 2021/11/26 21:58
  */
 @Component
 @Slf4j
-public class ConfirmConsumer {
+public class WarningConsumer {
 
-    /**
-     * @param message
-     */
-    @RabbitListener(queues = "confirm.queue")
-    public void receiveMsg(Message message) {
+
+    @RabbitListener(queues = "warning.queue")
+    public void receiveWarningMsg(Message message) {
         String msg = new String(message.getBody());
-        log.info("接受到队列 confirm.queue 消息:{}", msg);
+        log.error("报警发现不可路由消息：{}", msg);
     }
 
 
