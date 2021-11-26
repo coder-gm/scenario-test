@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author zgming
  */
 @SpringBootApplication(scanBasePackages = {
+        "cn.com.rabbitmq.demo",
         "cn.com.common.handle",
         "cn.com.common.config"
 })
