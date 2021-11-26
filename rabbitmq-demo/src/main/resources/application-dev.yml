@@ -22,3 +22,5 @@ spring:
     port: 5672
     username: admin
     password: admin
+    publisher-confirm-type: correlated #发布消息成功或失败到交换器后会触发回调方法
+    publisher-returns: true #无法路由到队列中的消息回退
