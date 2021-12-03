@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--status="WARN": status用来指定log4j本身的打印日志的级别.默认是OFF -->
+<!--monitorInterval="30": 间隔秒数,自动检测配置文件的变更和重新配置本身(如果跟踪线上异常信息可以把配置文件修改后不需重启服务，日志就会按照新的配置输出) -->
+<Configuration status="INFO" monitorInterval="30">
+    <!--====================初始化值=====================-->
+    <Properties>
+
+        <!--文件路径-->
+        <Property name="log_dir">/data/logs/scenario-test/concurrent-demo</Property>
+        <!--日志打印格式-->
+        <Property name="log_print_format">%d{yyyy-MM-dd HH:mm:ss:SSS}|%-5level|%thread|%X{invokeNo}|%c-%L| - %msg%n
+        </Property>
+        <!--压缩日志存放地址-->
+        <Property name="zip_file_dir">${log_dir}/$${date:yyyy-MM}/$${date:yyyy-MM-dd}/%d{yyyy-MM-dd}-%i.log.gz
+        </Property>
+        <!--日志输出文件地址-->
+        <Property name="log_output_file_dir">${log_dir}/$${date:yyyy-MM}/log.log</Property>
+
+    </Properties>
+
+    <!--Appenders节点，常见的有三种子节点:Console、RollingFile、File.-->
+    <Appenders>
+
+        <!--Console :控制台输出的配置-->
+        <Console name="console_out_logger" target="SYSTEM_OUT">
+            <!--日志格式-->
+            <!-- %d 当前时间 -->
+            <!-- %level 日志级别 -5表示占5个字符并且左对齐 -->
+            <!-- %t或%thread 线程名 -->
+            <!-- %c logger名称，由LoggerFactory.getLogger()方法传入 -->
+            <!-- %L 输出错误行号 -->
+            <!-- %M或%method 输出方法名 -->
+            <!-- %n换行符 -->
+            <!-- %l (小写l字母)输出日志事件发生位置，包括类目名、在代码中的行数 -->
+            <!-- %m或%msg或%message 输出信息logger.error(String msg)、logger.info(“message”)等转入的message -->
+            <!-- %C或%class 输出类名 -->
+            <PatternLayout pattern="${log_print_format}"/>
+        </Console>
+
+        <RollingFile name="ROLLING_FILE" immediateFlush="true" fileName="${log_output_file_dir}"
+                     filePattern="${zip_file_dir}" append="true">
+
+            <!--日志格式-->
+            <PatternLayout pattern="${log_print_format}"/>
+
+            <Filters>
+                <!--控制台只输出level及以上级别的信息（onMatch）Match：匹配 DENY：拒绝 Mismatch：不匹配 ACCEPT：接受 -->
+                <ThresholdFilter level="INFO" onMatch="ACCEPT"/>
+            </Filters>
+
+            <!-- Policies :日志滚动存档的策略-->
+            <Policies>
+                <!-- TimeBasedTriggeringPolicy :时间滚动策略,默认0点小时产生新的文件,interval="1":自定义文件滚动时间间隔,1的单位以filePattern的时间为单位，本例为1天，如果filePattern的时间参数精确到-H，则以小时为单位 -->
+                <!-- modulate若为true，则日志时间将以0点为边界进行偏移计算; 每间隔interval(与filepattern滚动日期单位一致)发生一次rollover，得到一个log.tar.gz文件-->
+
+                <!--
+                modulate若为true:则日志时间将以0点为边界进行偏移计算;
+                interval="1" 这个属性的作用是,根据filePattern="${zip_file_dir}的地址中的生成文件的格式(%d{yyyy-MM-dd HH-mm}-%i.log.gz) 来分辨在间隔多少时间来循环生成log.gz
+                例如: interval="2"并且 yyyy-MM-dd HH-mm 中的最小时间单位是mm(分钟),那就间隔两分钟循环一次生成log.gz,
+                     interval="4"并且 yyyy-MM-dd HH 中的最小时间单位是HH(小时),那就间隔小时循环一次生成log.gz
+                 -->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+
+                <!-- 日志文件达到多少的时候进行滚动 -->
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+
+            <!--DefaultRolloverStrategy:翻转策略决定如何执行备份 -->
+            <!--max:最多保存5个备份文件，结合时间使用后，在每个时间段内最多有5个备份，多出来的会被覆盖 -->
+            <!--compressionLevel:配置日志压缩级别，范围0-9，0不压缩，1压缩速度最快，9压缩率最好，目前只对于zip压缩文件类型有效 -->
+            <DefaultRolloverStrategy max="10" compressionLevel="1">
+                <!--Delete:删除匹配到的过期备份文件 -->
+                <!--maxDepth:由于备份文件保存在${LOG_HOME}/$${date:yyyy-MM},所以目录深度设置为2 -->
+                <Delete basePath="${zip_file_dir}" maxDepth="2">
+                    <!--IfFileName:匹配文件名称 -->
+                    <!--glob:匹配2级目录深度下的以.log.gz结尾的备份文件 -->
+                    <IfFileName glob="*/*.log.gz"/>
+                    <!--IfLastModified:匹配文件修改时间 -->
+                    <!--age:匹配超过180天的文件，单位D、H、M、S分别表示天、小时、分钟、秒-->
+                    <IfLastModified age="30D"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+
+
+        </RollingFile>
+
+    </Appenders>
+
+
+    <!--Loggers:定义日志级别和使用的Appenders -->
+    <Loggers>
+        <!--日志默认打印到控制台-->
+        <Root level="INFO">
+            <AppenderRef ref="console_out_logger"/>
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Root>
+
+
+        <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等。 -->
+        <Logger name="org.springframework" level="INFO"/>
+        <Logger name="org.mybatis" level="INFO"/>
+
+
+        <!--AsyncLogger :异步日志,LOG4J有三种日志模式,全异步日志,混合模式,同步日志,性能从高到底,线程越多效率越高,也可以避免日志卡死线程情况发生-->
+        <!--additivity="false" : additivity设置事件是否在root logger输出，为了避免重复输出，可以在Logger 标签下设置additivity为”false”-->
+        <Logger name="AsyncLogger" level="trace" includeLocation="true" additivity="false">
+            <AppenderRef ref="ROLLING_FILE"/>
+        </Logger>
+
+    </Loggers>
+
+
+</Configuration>
