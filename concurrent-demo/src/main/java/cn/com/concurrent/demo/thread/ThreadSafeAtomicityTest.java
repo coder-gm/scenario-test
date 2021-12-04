@@ -12,10 +12,10 @@ public class ThreadSafeAtomicityTest {
         threadSafeAtomicity.setName("子线程");
         threadSafeAtomicity.start();
 
-        for (int i = 0; i < 20_0000; i++) {
+        for (int i = 0; i < 20_0000000; i++) {
             ThreadSafeAtomicity.number++;
         }
-        System.out.println(Thread.currentThread().getName() + "对共享变量自增20万次 number=" + ThreadSafeAtomicity.number);
+        System.out.println(Thread.currentThread().getName() + "对共享变量自增2亿次 number=" + ThreadSafeAtomicity.number);
     }
 
 
@@ -33,16 +33,13 @@ class ThreadSafeAtomicity extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 20_0000; i++) {
+
+        for (int i = 0; i < 20_0000000; i++) {
             number++;
         }
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Thread.currentThread().getName() + "对共享变量自增20万次 number=" + number);
+
+        System.out.println(Thread.currentThread().getName() + "对共享变量自增2亿次 number=" + number);
     }
 
 }
