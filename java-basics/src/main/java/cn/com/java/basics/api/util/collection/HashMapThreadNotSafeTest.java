@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * HashSet线程不安全示例
@@ -40,7 +41,7 @@ public class HashMapThreadNotSafeTest {
 
 
 class HashMapHolder extends Thread {
-    Segment
+
 
     static Map<Integer, Integer> map = new ConcurrentHashMap<>(131072);
 
