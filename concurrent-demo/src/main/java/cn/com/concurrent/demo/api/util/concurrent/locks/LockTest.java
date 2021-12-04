@@ -1,4 +1,4 @@
-package cn.com.concurrent.demo.thread;
+package cn.com.concurrent.demo.api.util.concurrent.locks;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

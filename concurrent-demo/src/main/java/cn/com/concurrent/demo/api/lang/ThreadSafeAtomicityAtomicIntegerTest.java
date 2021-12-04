@@ -1,4 +1,4 @@
-package cn.com.concurrent.demo.thread;
+package cn.com.concurrent.demo.api.lang;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

@@ -1,6 +1,8 @@
-package cn.com.concurrent.demo.thread;
+package cn.com.concurrent.demo.api.lang;
 
 /**
+ * 多线程死锁测试
+ *
  * @Description
  * @Author Guang Ming Zhang
  * @Date 2021/12/4 10:01

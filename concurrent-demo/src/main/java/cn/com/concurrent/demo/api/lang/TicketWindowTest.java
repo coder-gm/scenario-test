@@ -1,4 +1,4 @@
-package cn.com.concurrent.demo.thread;
+package cn.com.concurrent.demo.api.lang;
 
 /**
  * 售票任务
@@ -7,7 +7,7 @@ package cn.com.concurrent.demo.thread;
  * @Author Guang Ming Zhang
  * @Date 2021/12/4 1:12
  */
-public class TicketWindow implements Runnable {
+public class TicketWindowTest implements Runnable {
 
 
     static int ticket = 100;
@@ -38,7 +38,7 @@ public class TicketWindow implements Runnable {
 
 
     public static void main(String[] args) {
-        TicketWindow ticketWindow = new TicketWindow();
+        TicketWindowTest ticketWindow = new TicketWindowTest();
         new Thread(ticketWindow, "窗口1：").start();
         new Thread(ticketWindow, "窗口2：").start();
         new Thread(ticketWindow, "窗口3：").start();

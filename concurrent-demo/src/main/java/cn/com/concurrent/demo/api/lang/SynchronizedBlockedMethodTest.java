@@ -1,6 +1,4 @@
-package cn.com.concurrent.demo.thread;
-
-import java.util.concurrent.locks.ReentrantLock;
+package cn.com.concurrent.demo.api.lang;
 
 /**
  * 同步代码块和同步方法的综合使用
@@ -10,8 +8,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * @Date 2021/12/4 8:45
  */
 public class SynchronizedBlockedMethodTest {
-
-
 
 
     public static void main(String[] args) {
