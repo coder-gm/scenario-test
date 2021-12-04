@@ -38,8 +38,9 @@
         <module>rocketmq-demo</module>
         <!--RabbitMQ测试工程-->
         <module>rabbitmq-demo</module>
-        <!--并发编程测试-->
-        <module>concurrent-demo</module>
+        <!--场景测试-->
+        <module>java-basics</module>
+
     </modules>
 
 
