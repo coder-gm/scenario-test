@@ -14,7 +14,7 @@
     <artifactId>docker-demo</artifactId>
     <packaging>jar</packaging><!-- 打包方式-->
     <name>docker-demo</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>docker功能测试</description>
 
 
@@ -38,9 +38,10 @@
     </dependencies>
 
     <build>
+        <!-- 引用我们的项目名字 -->
+        <finalName>${project.artifactId}</finalName>
 
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -66,7 +67,7 @@
 
                 <configuration>
                     <!--指定生成的镜像名,这里是我们的作者名+项目名-->
-                    <imageName>zgming/${project.name}</imageName>
+                    <imageName>zgming/${project.artifactId}</imageName>
 
                     <!--指定标签 这里指定的是镜像的版本，我们默认版本是latest-->
                     <imageTags>
@@ -86,13 +87,16 @@
                     <cmd>["java", "-version"]</cmd>
 
                     <!--${project.build.finalName}.jar是打包后生成的jar包的名字-->
-                    <entryPoint>["java", "-jar", "/${project.name}.jar"]</entryPoint>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 
                     <!-- 指定 Dockerfile 路径 -->
                     <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
 
                     <!--指定远程 docker api地址-->
                     <dockerHost>https://106.15.187.228:2375</dockerHost>
+
+                    <!--指定CA证书存放路径-->
+                    <dockerCertPath>E:\桌面\项目代码\个人测试项目\场景测试项目\scenario-test\docker-ca</dockerCertPath>
 
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
@@ -101,7 +105,7 @@
                             <!--jar 包所在的路径  此处配置的 即对应 target 目录-->
                             <directory>${project.build.directory}</directory>
                             <!--用于指定需要复制的文件 需要包含的 jar包 ，这里对应的是 Dockerfile中添加的文件名　-->
-                            <include>${project.name}.jar</include>
+                            <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
 
@@ -109,6 +113,7 @@
             </plugin>
         </plugins>
     </build>
+
 
 
 </project>

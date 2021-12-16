@@ -15,7 +15,13 @@ public class DockerDemoController {
 
     @GetMapping("/demo")
     public String dockerDemo() {
-        return "Idea 整合 Docker 功能测试 ！！";
+        return "Idea 整合 Docker 功能Java测试 ！！";
     }
+
+    @GetMapping("/demo1")
+    public String dockerDemo1() {
+        return "Idea 整合 Docker 功能Java测试1 ！！";
+    }
+
 
 }
