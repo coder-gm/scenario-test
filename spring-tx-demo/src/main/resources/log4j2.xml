@@ -8,7 +8,7 @@
     <Properties>
 
         <!--文件路径-->
-        <Property name="log_dir">/data/logs/scenario-test/java-basics</Property>
+        <Property name="log_dir">/data/logs/scenario-test/spring-tx-demo</Property>
         <!--日志打印格式-->
         <Property name="log_print_format">%d{yyyy-MM-dd HH:mm:ss:SSS}|%-5level|%thread|%X{invokeNo}|%c-%L| - %msg%n
         </Property>

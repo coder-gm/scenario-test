@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.springtxdemo.mapper.EmployeesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.com.springtxdemo.model.po.Employees">
+        <id column="employee_id" property="employeeId" />
+        <result column="first_name" property="firstName" />
+        <result column="last_name" property="lastName" />
+        <result column="email" property="email" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="hire_date" property="hireDate" />
+        <result column="job_id" property="jobId" />
+        <result column="salary" property="salary" />
+        <result column="commission_pct" property="commissionPct" />
+        <result column="manager_id" property="managerId" />
+        <result column="department_id" property="departmentId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id
+    </sql>
+
+</mapper>

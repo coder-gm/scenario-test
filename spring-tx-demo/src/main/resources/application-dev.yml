@@ -1,8 +1,7 @@
 server:
   #访问HTTP端口号
-  port: 8181
-  servlet:
-    context-path: "/java-basics"
+  port: 8082
+
 
 
 ########################################################
@@ -10,4 +9,57 @@ server:
 ########################################################
 logging:
   config: classpath:log4j2.xml
+
+
+
+
+########################################################
+### Spring配置
+########################################################
+spring:
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.103.64.174:3306/scenario-test?useSSL=false&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: Gm859230
+    type: com.zaxxer.hikari.HikariDataSource
+
+    ################################################## Hikari数据库连接池 ##########################################
+    hikari:
+      pool-name: Retail_HikariCP
+      minimum-idle: 5 #最小空闲连接数量
+      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+      maximum-pool-size: 10 #连接池最大连接数，默认是10
+      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
+      connection-test-query: SELECT 1
+
+
+
+
+########################################################
+### mybatis-plus配置
+########################################################
+mybatis-plus: #对应 MybatisSqlSessionFactoryBean
+  check-config-location: false #启动时是否检查 mybatis-config.xml文件的存在,默认不检查
+  #config-location: 引入mybatis-config.xml配置文件  和 mybatis-plus.configuration 只能二选一
+  #type-aliases-package: #为某个包下的所有类取别名
+  #type-handlers-package: #引入自定义类型转换
+  #type-aliases-super-type: java.lang.Object
+  #configuration-properties: #指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署
+  type-enums-package: com.springboot.demo.model.menus  #枚举类 扫描路径，如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性
+  mapper-locations: classpath:mapper/*.xml
+
+  configuration:
+    #开启数据库字段与实体类驼峰命名映射
+    map-underscore-to-camel-case: true
+    #开启mybatis的日志实现,可以在控制台打印输入sql语句 (仅限于开发环境,生产环境要去掉,要不日志量很大)
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config: #对应 GlobalConfig (MyBatisPlus全局策略配置)
+
+    db-config:
+      #全局主键生成策略和 @TableId(value = "id", type = IdType.AUTO) 一样使用
+      id-type: assign_uuid
 
