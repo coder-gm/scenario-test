@@ -25,7 +25,7 @@ public class Departments implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "department_id", type = IdType.ASSIGN_UUID)
-    private Integer departmentId;
+    private String departmentId;
 
     @TableField("department_name")
     private String departmentName;
