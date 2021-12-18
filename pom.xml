@@ -42,6 +42,8 @@
         <module>java-basics</module>
         <!--docker功能测试-->
         <module>docker-demo</module>
+        <!--Spring 事务场景测试-->
+        <module>spring-tx-demo</module>
     </modules>
 
 
