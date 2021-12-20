@@ -14,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface DepartmentsService extends IService<Departments> {
 
     void add();
+
+
+    void updateStatus();
 }

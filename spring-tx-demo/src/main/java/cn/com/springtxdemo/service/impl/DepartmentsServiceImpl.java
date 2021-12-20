@@ -1,8 +1,10 @@
 package cn.com.springtxdemo.service.impl;
 
+import cn.com.springtxdemo.mapper.EmployeesMapper;
 import cn.com.springtxdemo.model.po.Departments;
 import cn.com.springtxdemo.mapper.DepartmentsMapper;
 import cn.com.springtxdemo.service.DepartmentsService;
+import cn.com.springtxdemo.service.EmployeesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,10 +29,9 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
         departments.setDepartmentName("张三");
         departments.setLocationId(1111111);
         this.save(departments);
-        updateStatus();
-        int num = 1 / 0;
     }
 
+    @Override
     @Transactional
     public void updateStatus() {
         Departments departments = new Departments();

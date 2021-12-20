@@ -26,7 +26,7 @@ public class Employees implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "employee_id", type = IdType.ASSIGN_UUID)
-    private Integer employeeId;
+    private String employeeId;
 
     @TableField("first_name")
     private String firstName;
