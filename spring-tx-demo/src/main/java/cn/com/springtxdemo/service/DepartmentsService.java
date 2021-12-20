@@ -15,6 +15,4 @@ public interface DepartmentsService extends IService<Departments> {
 
     void add();
 
-
-    void updateStatus();
 }

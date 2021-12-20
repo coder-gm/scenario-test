@@ -1,7 +1,7 @@
 package cn.com.springtxdemo.controller;
 
 
-import cn.com.springtxdemo.service.impl.TxDemoService;
+import cn.com.springtxdemo.service.DepartmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentsController {
 
     @Autowired
-    private TxDemoService departmentsService;
+    private DepartmentsService departmentsService;
 
     @GetMapping("/add")
     public void add() {

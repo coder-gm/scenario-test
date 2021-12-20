@@ -23,7 +23,6 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
 
 
     @Override
-    @Transactional
     public void add() {
         Departments departments = new Departments();
         departments.setDepartmentName("张三");
@@ -31,7 +30,6 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
         this.save(departments);
     }
 
-    @Override
     @Transactional
     public void updateStatus() {
         Departments departments = new Departments();
