@@ -101,7 +101,7 @@ public class CodeGenerator {
         //数据库类型,该类内置了常用的数据库类型【必须】
         dsc.setDbType(DbType.MYSQL);
         //驱动连接的URL
-        dsc.setUrl("jdbc:mysql://47.103.64.174:3306/scenario-test");
+        dsc.setUrl("jdbc:mysql://47.103.64.174:3306/ffr_remote_follower");
         //驱动名称
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         //数据库连接用户名
@@ -126,10 +126,10 @@ public class CodeGenerator {
         //数据库下滑线转驼峰命名
         sc.setNaming(NamingStrategy.underline_to_camel);
         //表前缀
-        sc.setTablePrefix("tbl_");
+        sc.setTablePrefix("comm_");
         //需要包含的表名，当enableSqlFilter为false时，允许正则表达式（与exclude二选一配置）
         //需要生成代码的表名
-        sc.setInclude("employees", "departments");
+        sc.setInclude("check_process", "steps_check","device_operation_video");
         //是否生成实体时，生成字段注解
         sc.setEntityTableFieldAnnotationEnable(true);
         //乐观锁属性名称
@@ -159,7 +159,7 @@ public class CodeGenerator {
     public PackageConfig getPackageConfig() {
         PackageConfig pc = new PackageConfig();
         //parent  父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
-        pc.setParent("cn.com.springtxdemo");
+        pc.setParent("com.abbott.ffr");
         //Entity包名
         pc.setEntity("model.po");
         //Service包名
